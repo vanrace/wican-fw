@@ -2,15 +2,25 @@
   "car_model": "Kia: Niro EV",
   "init": "ATSH7E4;ATST96;",
   "pids": [
+  "pids": [
+    {
+      "pid": "220100",
+      "pid_init": "ATSH7B3;",
+      "parameters": {
+        "SPEED": "B38",
+        "TMP_A": "(B12/2)-40",
+        "T_CAB": "(B11/2)-40"
+      }
+    },  
     {
       "pid": "2201019",
       "parameters": {
         "SOC": "B10/2",
         "REGEN_MAX": "[B11:B12]/100",
         "POWER_MAX": "[B13:B14]/100",
-        "HV_A": "(65536-([B17:B18]))/10",
+        "HV_A": "((S17*256)+B18)/10",
         "HV_V": "[B19:B20]/10",
-        "HV_W": "([B19:B20]/10)*((65536-([B17:B18]))/10)",
+        "HV_W": "([B19:B20]/10)*((S17*256)+B18)/10"
         "HV_T_MAX": "B21",
         "HV_T_MIN": "B22",
         "HV_T_1": "B23",
@@ -24,7 +34,18 @@
         "HV_C_V_MIN": "B34/50",
         "HV_C_V_MIN_NO": "B35",
         "LV_V": "B38*0.1",
-        "KWH_CHARGED": "([B49:B50]*65536 + [B51:B52])/10"
+		"IGNITION": "B62:2",
+        "HV_RELAY": "B15:0",
+		"CHARGING": "B15:7",
+		"AC_PLUG": "B15:5",
+        "OP_TIME": "((B58<<24)+(B59<<16)+(B60<<8)+B61)/3600",
+        "CHARGING_DC": "B15:6",
+        "CAPACITOR": "((B63<<8)+B35)",
+        "RESISTANCE": "([B41:B42])",
+        "HV_AH_CHARGED": "((B39<<24)+(B41<<16)+(B42<<8)+B43)/10",
+        "HV_AH_DISCHARGED": "((B44<<24)+(B45<<16)+(B46<<8)+B47)/10",
+        "KWH_CHARGED": "((B49<<24)+(B50<<16)+(B51<<8)+B52)/10",
+        "KWH_DISCHARGED": "((B53<<24)+(B54<<16)+(B55<<8)+B57)/10"
       }
     },
     {
@@ -34,14 +55,15 @@
         "SOC_D": "B41/2",
         "HV_C_D_MIN_NO": "B39",
         "HV_C_D_MAX_NO": "B36",
-        "HV_C_D_MIN": "[B37:B38]/10"
+        "HV_C_D_MIN": "[B37:B38]/10",
+		"HV_KWH_R": "((B37 << 8) + B38) *2",
       }
     },
     {
       "pid": "22B002",
-      "pid_init": "ATSH7C6;ATFCSH7C6",
+      "pid_init": "ATSH7C6;",
       "parameters": {
-        "ODOMETER": "[B5:B6]"
+        "ODOMETER": "[B12:B14]"
       }
     }
   ]
